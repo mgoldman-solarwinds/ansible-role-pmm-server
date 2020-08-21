@@ -11,8 +11,9 @@
     image: "percona/pmm-server:{{ pmm_server_version }}"
     state: started
     volumes_from:
-    - pmm-data
+      - pmm-data
     env: "{{ __pmm_server_env }}"
     ports:
     - "{{ pmm_server_http_port }}:80"
+    - "{{ pmm_server_https_port }}:443"
     restart_policy: always
