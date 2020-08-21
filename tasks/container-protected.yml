@@ -17,3 +17,9 @@
     - "{{ pmm_server_http_port }}:80"
     - "{{ pmm_server_https_port }}:443"
     restart_policy: always
+  register: docker_create
+
+- name: Set admin password
+  command: "docker exec -t pmm-server bash -c  'ln -s /srv/grafana /usr/share/grafana/data; grafana-cli --homepath /usr/share/grafana admin reset-admin-password {{ pmm_server_password }}'"
+  changed_when: false
+  when: docker_create.changed
